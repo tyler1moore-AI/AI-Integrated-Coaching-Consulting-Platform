@@ -8,186 +8,1435 @@
 <meta content="Case study of an AI-integrated coaching portal using Retool Apps, a conversational AI coach-discovery experience, SQL engagement reporting, and Calendly scheduling synchronized through Make.com." name="description"/>
 <title>AI Integrated Coaching &amp; Consulting Portal</title>
 <style>
-:root{--ink:#2056a5;--sub:#2056a5;--line:#2056a5;--blue:#2056a5;--cyan:#2056a5;--teal:#2056a5;--light:#2056a5;--dark:#2056a5;--dark2:#2056a5;--paper:#2056a5;--code:#2056a5;--max:1190px;--radius:18px}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:100px}
-body{margin:0;background:#fff;color:#2056a5;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.62}
-a{color:#2056a5;text-decoration:none}
-a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #2056a5;outline-offset:3px}
-button{font:inherit;cursor:pointer}
-.container{max-width:var(--max);margin:0 auto;padding:0 30px}
-.top{position:sticky;top:0;z-index:20;height:72px;border-bottom:1px solid #2056a5;background:#fff;color:#2056a5;backdrop-filter:none}
-.top .container{display:flex;height:100%;align-items:center;justify-content:space-between;gap:22px}
-.brand{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:800;letter-spacing:.025em;white-space:nowrap}
-.brand-logo{display:grid;place-items:center;width:36px;height:36px;border:1px solid #2056a5;border-radius:4px;background:#fff;color:#2056a5;font-size:17px;font-weight:900}
-.top-nav{display:flex;gap:30px;align-items:center;font-size:13px;color:#2056a5}
-.top-nav a:hover{color:#2056a5}
-.nav-action{padding:10px 15px;border:1px solid #2056a5;border-radius:4px;color:#2056a5;font-size:12px;font-weight:750;white-space:nowrap}
-.nav-action:hover{background:#fff}
-.hero{overflow:hidden;color:#2056a5;background:#fff;padding:77px 0 82px}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1.14fr) minmax(380px,.86fr);gap:66px;align-items:center}
-.eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:850;color:#2056a5}
-.eyebrow:before{content:"";display:inline-block;width:23px;height:2px;background:#fff}
-.hero h1{font-size:clamp(39px,4.2vw,66px);letter-spacing:-.046em;line-height:1.08;margin:24px 0 22px;max-width:740px;font-weight:820}
-.hero h1 em{font-style:normal;color:#2056a5}
-.lead{font-size:17px;line-height:1.7;color:#2056a5;max-width:660px;margin:0 0 30px}
-.tag-row{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 32px}
-.tag{color:#2056a5;background:#fff;border:1px solid #2056a5;border-radius:4px;padding:5px 11px;font-size:11px;font-weight:680}
-.actions{display:flex;gap:12px;flex-wrap:wrap}
-.button{border:1px solid #2056a5;border-radius:4px;background:#fff;color:#2056a5;font-weight:760;padding:11px 17px;font-size:13px;display:inline-flex;align-items:center;gap:9px}
-.button:hover{background:#fff}
-.button.secondary{background:#fff;border-color:#2056a5;color:#2056a5}
-.button.secondary:hover{background:#fff}
-.arch-preview{border:1px solid #2056a5;border-radius:4px;padding:20px;background:#fff;box-shadow:none}
-.preview-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2056a5;padding-bottom:15px;color:#2056a5;font-size:12px;font-weight:700}
-.dots{display:flex;gap:6px}.dots span{width:8px;height:8px;background:#fff;border-radius:4px}.dots span:first-child{background:#fff}.dots span:nth-child(2){background:#fff}.dots span:nth-child(3){background:#fff}
-.preview-flow{padding:22px 2px 8px;display:flex;flex-direction:column;align-items:center;gap:9px}
-.node{background:#fff;border:1px solid #2056a5;border-radius:4px;padding:11px 16px;color:#2056a5;text-align:center;min-width:260px;max-width:100%}
-.node strong{display:block;font-size:12px;letter-spacing:.015em}.node small{font-size:10px;color:#2056a5;display:block;margin-top:1px}
-.node.ai{background:#fff;border-color:#2056a5}.node.sql{background:#fff;border-color:#2056a5}.flow-arrow{font-size:15px;line-height:1;color:#2056a5}
-.preview-bottom{font-size:10px;color:#2056a5;text-align:center;margin-top:14px;padding-top:15px;border-top:1px solid #2056a5}
-.summary{background:#fff;border-bottom:1px solid var(--line)}
-.summary-grid{display:grid;grid-template-columns:repeat(3,1fr)}
-.summary-item{padding:29px 30px 31px 0;min-height:123px}.summary-item+.summary-item{padding-left:30px;border-left:1px solid #2056a5}
-.kicker{font-size:10px;text-transform:uppercase;letter-spacing:.14em;font-weight:840;color:#2056a5;margin-bottom:7px}
-.summary-item strong{font-size:14px;line-height:1.5;display:block;color:#2056a5}
-.section{padding:80px 0}.section.white{background:#fff}.section.gray{background:#fff}.section.dark{background:#fff;color:#2056a5}
-.section-heading{max-width:840px;margin-bottom:38px}
-.section-num{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:830;color:#2056a5;margin-bottom:9px}
-.section.dark .section-num{color:#2056a5}
-h2{font-size:clamp(29px,3.0vw,43px);letter-spacing:-.033em;line-height:1.2;margin:0 0 15px;font-weight:800}
-.section-heading p{font-size:16px;color:#2056a5;margin:0;max-width:780px;line-height:1.78}
-.section.dark .section-heading p{color:#2056a5}
-h3{font-size:19px;line-height:1.35;letter-spacing:-.018em;margin:0 0 10px}
-p{margin:0 0 13px}.text-block p{line-height:1.83;color:#2056a5}
-.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.info-card{border:1px solid #2056a5;border-radius:4px;background:#fff;padding:26px 28px;box-shadow:none}
-.info-card p{font-size:14px;color:#2056a5;margin:0;line-height:1.8}
-.info-card .icon{font-size:22px;margin-bottom:15px;display:inline-flex;width:43px;height:43px;align-items:center;justify-content:center;border-radius:4px;background:#fff;color:#2056a5;font-weight:800}
-.callout{border-left:3px solid #2056a5;padding:11px 0 10px 20px;color:#2056a5;font-size:16px;line-height:1.75;margin:28px 0 0;font-weight:560}
-.arch-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-.arch-step{position:relative;background:#fff;border:1px solid #2056a5;border-radius:4px;padding:22px 17px;min-height:195px}
-.arch-step:after{content:'→';position:absolute;right:-15px;top:77px;z-index:1;color:#2056a5;font-size:22px;font-weight:bold}
-.arch-step:last-child:after{content:''}
-.arch-index{font-size:11px;color:#2056a5;font-weight:850;letter-spacing:.07em;margin-bottom:24px}
-.arch-step h3{font-size:15px;margin-bottom:8px}.arch-step p{font-size:12px;color:#2056a5;line-height:1.65;margin:0}
-.boundary{margin-top:15px;padding:16px 20px;border-radius:4px;border:1px dashed #2056a5;color:#2056a5;background:#fff;font-size:13px;line-height:1.7}
-.tech-intro{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:28px}
-.tech-intro .section-heading{margin-bottom:0}
-.safe-note{border:1px solid #2056a5;border-radius:4px;background:#fff;padding:14px 17px;font-size:12px;color:#2056a5;max-width:330px;line-height:1.6}
-.tech-layout{display:grid;grid-template-columns:240px 1fr;gap:22px;align-items:start}
-.tech-list{background:#fff;border:1px solid #2056a5;border-radius:4px;padding:12px;position:sticky;top:95px}
-.tech-list .list-title{font-size:10px;letter-spacing:.12em;color:#2056a5;font-weight:850;margin:10px 13px 9px}
-.tech-tab{display:flex;width:100%;align-items:center;gap:10px;background:#fff;border:0;color:#2056a5;text-align:left;font-size:13px;padding:11px 13px;border-radius:4px;margin:3px 0}
-.tech-tab:hover{background:#fff}.tech-tab.active{background:#fff;color:#2056a5;box-shadow:none}
-.tech-tab .tab-icon{font-size:11px;opacity:.75;flex:none;width:24px}
-.tech-pane{background:#fff;border-radius:4px;overflow:hidden;color:#2056a5;box-shadow:none;min-height:520px}
-.pane-intro{padding:26px 27px 17px}.pane-kind{font-size:10px;font-weight:830;color:#2056a5;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
-.pane-intro h3{font-size:21px}.pane-intro p{font-size:13px;line-height:1.75;color:#2056a5;max-width:800px;margin-bottom:0}
-.pane-code-head{background:#fff;color:#2056a5;display:flex;justify-content:space-between;align-items:center;padding:10px 18px;font-size:11px;font-weight:690}
-.pane-code-head span{display:flex;align-items:center;gap:8px}
-.pane-code-head span:before{content:'';width:7px;height:7px;background:#fff;border-radius:4px}
-.copy-btn{border:1px solid #2056a5;border-radius:4px;padding:5px 11px;background:#fff;color:#2056a5;font-size:11px;font-weight:710}
-.copy-btn:hover{background:#fff}
-pre{margin:0;padding:22px 25px 26px;overflow-x:auto;background:#fff;color:#2056a5;font:12px/1.8 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;tab-size:2;min-height:290px;white-space:pre}
-.pane-details{padding:17px 25px 24px;background:#fff;font-size:13px;color:#2056a5;line-height:1.65}
-.pane-details strong{display:block;color:#2056a5;margin-bottom:3px}
-.tech-panel[hidden]{display:none}
-.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.decision{background:#fff;border:1px solid #2056a5;border-radius:4px;padding:27px 24px}
-.decision .num{font-size:12px;color:#2056a5;font-weight:850;letter-spacing:.1em;margin-bottom:20px}.decision p{font-size:13px;line-height:1.79;color:#2056a5;margin-bottom:0}
-.feature-strip{margin:28px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.feature{padding:19px 22px;border:1px solid #2056a5;background:#fff;border-radius:4px;font-size:13px;color:#2056a5}.feature strong{display:block;color:#2056a5;font-size:14px;margin-bottom:5px}
-.outcomes{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:start}
-.outcomes .text-block p{font-size:15px}
-.checks{background:#fff;border:1px solid #2056a5;border-radius:4px;padding:26px 30px}
-.checks h3{font-size:16px;margin-bottom:20px}.checks ul{padding:0;margin:0;list-style:none}.checks li{display:flex;gap:12px;color:#2056a5;padding:10px 0;border-bottom:1px solid #2056a5;font-size:14px}.checks li:last-child{border-bottom:0}.checks li:before{content:'✓';color:#2056a5;font-weight:900}
-.note{margin-top:23px;padding:18px 22px;background:#fff;border:1px solid #2056a5;border-radius:4px;color:#2056a5;font-size:12px;line-height:1.75}
-.footer{background:#fff;color:#2056a5;padding:38px 0}
-.footer .container{display:flex;justify-content:space-between;gap:20px;align-items:center}
-.footer strong{display:block;color:#2056a5;margin-bottom:5px;font-size:14px}.footer p{font-size:12px;margin:0;max-width:680px;line-height:1.7}
-.footer a{font-size:12px;color:#2056a5}
-@media(max-width:1040px){.hero-grid{grid-template-columns:1fr;gap:36px}.arch-preview{max-width:600px}.arch-row{grid-template-columns:repeat(3,1fr)}.arch-step:after{display:none}.tech-layout{grid-template-columns:200px 1fr}.summary-item{padding-right:14px}.summary-item+.summary-item{padding-left:17px}}
-@media(max-width:770px){.container{padding:0 19px}.top{height:66px}.top-nav{gap:12px}.top-nav a:not(.nav-action){display:none}.hero{padding:54px 0 57px}.hero h1{font-size:41px}.lead{font-size:15px}.summary-grid{grid-template-columns:1fr}.summary-item,.summary-item+.summary-item{padding:17px 0;border-left:0;border-bottom:1px solid #2056a5;min-height:0}.section{padding:58px 0}.problem-grid,.work-grid,.outcomes,.feature-strip{grid-template-columns:1fr}.arch-row{grid-template-columns:1fr 1fr}.arch-step{min-height:175px}.tech-intro{flex-direction:column;align-items:start}.safe-note{max-width:unset}.tech-layout{display:block}.tech-list{position:static;display:flex;overflow:auto;gap:5px;margin-bottom:13px}.tech-list .list-title{display:none}.tech-tab{white-space:nowrap;width:auto;padding:9px 11px}.tech-tab .tab-icon{display:none}.pane-intro{padding:22px 19px 16px}pre{font-size:11px;padding:15px;min-height:260px}.pane-details{padding:17px}.footer .container{flex-direction:column;align-items:start}}
-@media(max-width:450px){.brand{font-size:11px}.brand-logo{height:30px;width:30px}.nav-action{padding:8px;font-size:10px}.hero h1{font-size:34px}.arch-row{grid-template-columns:1fr}.node{min-width:235px}.arch-step{min-height:0}}
-@media print{.top,.actions,.tech-list,.copy-btn{display:none}.hero,.section.dark{background:#fff;color:#2056a5}.hero h1 em{color:#2056a5}.lead,.section.dark .section-heading p{color:#2056a5}.arch-preview{display:none}.hero-grid{display:block}.tech-panel[hidden]{display:block}.tech-layout{display:block}.tech-pane{break-inside:avoid}.section{padding:28px 0}pre{white-space:pre-wrap;word-break:break-all}}
+:root {
+  --brand-blue: #2056a5;
+  --surface: #fff;
+  --surface-tint: #f7faff;
+  --border-subtle: #bdd0e9;
+  --max: 1190px;
+  --radius: 4px;
+}
 
-:root{--ink:#2056a5;--sub:#2056a5;--line:#2056a5;--blue:#2056a5;--light:#fff;--paper:#fff;--radius:4px}
-body,.hero,.section.gray,.section.dark,.top,.footer,pre{background:#fff;color:#2056a5}
-.hero,.section{border-bottom:1px solid #2056a5}
-.hero h1{font-size:clamp(36px,4.2vw,58px);margin-top:0}
-.button,.tech-tab.active{background:#2056a5;color:#fff}
-.button:hover,.copy-btn:hover,.nav-action:hover,.tech-tab:hover{background:#2056a5;color:#fff}
-.button.secondary{background:#fff;color:#2056a5}
-.top-nav a:hover,.footer strong{color:#2056a5}
-.tech-pane{border:1px solid #2056a5;min-width:0}
-.tech-panels,.tech-layout{min-width:0}
-.dots span,.pane-code-head span:before{background:#2056a5}
-.match-content{padding:0 27px 25px;font-size:14px}
-.match-content h4{margin:24px 0 8px;font-size:16px}
-.match-content table{border-collapse:collapse;width:100%;font-size:13px;margin:15px 0}
-.match-content th,.match-content td{border:1px solid #2056a5;padding:12px;text-align:left;vertical-align:top}
-.match-content ol{padding-left:20px}.match-content li{margin-bottom:12px}
-.match-example{border:1px solid #2056a5;padding:18px;margin-top:20px}
-.match-content a{text-decoration:underline}
-@media(max-width:770px){.match-content{padding:0 19px 20px}.match-content th,.match-content td{padding:8px;font-size:12px}.tech-panels{width:100%}pre{max-width:100%}.node{min-width:0;width:100%}}
+/* Layout and navigation */
 
-/* Three-part technical build navigation */
-.tech-list .tech-tab{line-height:1.4}.tech-list .list-title{margin-top:12px}.match-content code{font-size:.92em;overflow-wrap:anywhere}.match-content td{overflow-wrap:anywhere}@media(max-width:770px){.tech-list{gap:4px}.tech-tab{font-size:12px}}
+* {
+  box-sizing: border-box;
+}
 
-/* AI configuration & matching deep-dive (retains original blue/white case-study design) */
-.ai-deep-dive{line-height:1.7}
-.ai-deep-dive .ai-section-label{display:inline-block;margin:12px 0 7px;font-size:11px;font-weight:850;letter-spacing:.12em;color:#2056a5}
-.ai-deep-dive .ai-lead-heading{font-size:21px;letter-spacing:-.025em;margin:6px 0 11px}
-.ai-deep-dive .ai-second-part{margin-top:40px;padding-top:20px;border-top:1px solid #aac3e4;display:block}
-.ai-deep-dive h4{margin-top:30px}
-.ai-deep-dive p{margin-bottom:13px}
-.ai-training-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0 30px}
-.ai-training-card{border:1px solid #bdd0e9;padding:17px 18px;background:#fff;border-radius:4px;min-width:0}
-.ai-training-card h5{font-size:14px;line-height:1.4;margin:5px 0 8px;color:#2056a5}
-.ai-training-card p{font-size:12.8px;line-height:1.65;margin:0}
-.ai-step-number{font-size:11px;letter-spacing:.1em;font-weight:850;color:#2056a5}
-.ai-field-table td:first-child{width:36%}
-.ai-prompt pre,.ai-json pre{min-height:0;padding:19px 25px;color:#2056a5;background:#f7faff;border-top:1px solid #d3e0f0;border-bottom:1px solid #d3e0f0;font-size:12px;line-height:1.6;white-space:pre;overflow-x:auto}
-.ai-prompt code,.ai-json code{font-size:inherit}
-.ai-connection-note{margin:22px 0 6px;border-left:3px solid #2056a5;padding:15px 18px;background:#f7faff;font-size:13px}
-.conversation-thread{border:1px solid #c3d4eb;padding:18px;border-radius:4px;background:#f8fbff;display:flex;flex-direction:column;gap:13px;margin:21px 0 32px}
-.conversation-line{max-width:88%;border:1px solid #b6cce7;border-radius:6px;padding:11px 15px;background:white;align-self:flex-start}
-.conversation-line.employee{align-self:flex-end;background:#2056a5;color:#fff;border-color:#2056a5}
-.conversation-speaker{font-size:10px;font-weight:800;letter-spacing:.09em;margin-bottom:5px;opacity:.85}
-.conversation-line p{margin:0;font-size:13px;line-height:1.6}
-.ai-rubric td:last-child,.ai-rubric th:last-child{text-align:right;white-space:nowrap}
-.ai-coaches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0 31px}
-.ai-coach{border:1px solid #b8cee8;border-radius:4px;padding:16px;min-width:0}
-.ai-coach.is-top{border:2px solid #2056a5;padding:15px}
-.ai-coach-head{display:flex;align-items:start;justify-content:space-between;gap:8px}
-.ai-coach h5{font-size:17px;letter-spacing:-.025em;margin:4px 0 11px}
-.ai-coach-kicker{display:block;font-size:9px;line-height:1.4;letter-spacing:.09em;font-weight:850}
-.ai-score{font-size:29px;font-weight:850;letter-spacing:-.05em;line-height:1;white-space:nowrap}
-.ai-score span{font-size:13px;font-weight:700;letter-spacing:0}
-.ai-coach .ai-coach-meta{font-size:12px;line-height:1.75;overflow-wrap:anywhere}
-.score-components{display:flex;flex-wrap:wrap;gap:5px;margin:14px 0 11px}
-.score-components span{padding:3px 6px;border:1px solid #bfd1ea;border-radius:4px;font-size:10px;font-weight:730}
-.ai-coach .ai-result-reason{font-size:12px;line-height:1.65;margin:0}
-.ai-output-preview{padding:18px 22px;margin:17px 0 20px;border-left:3px solid #2056a5;background:#f7faff}
-.ai-output-label{font-size:10px;font-weight:850;letter-spacing:.08em;margin-bottom:8px}
-.ai-output-preview p{margin:0;font-size:14px}
-.ai-final-note{padding-top:16px;border-top:1px solid #cbd9ec}
-@media(max-width:1100px){.ai-coaches{grid-template-columns:1fr}.ai-coach .ai-coach-meta{font-size:13px}}
-@media(max-width:770px){.ai-training-grid{grid-template-columns:1fr}.ai-deep-dive .ai-lead-heading{font-size:19px}.conversation-thread{padding:11px}.conversation-line{max-width:96%}.ai-prompt pre,.ai-json pre{padding:14px;font-size:10.5px}}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
 
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--brand-blue);
+  font-family: Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.62;
+}
 
-/* Concise, employer-facing data provenance line */
-.case-data-context{font-size:12px;line-height:1.65;border-left:3px solid #2056a5;padding:9px 0 9px 15px;margin:0 0 25px;max-width:650px;color:#2056a5}
-.case-data-context span{font-weight:850;font-size:10px;letter-spacing:.10em;display:block;margin-bottom:3px}
-.qa-table td:first-child{font-weight:680}
-@media print{.case-data-context{break-inside:avoid}}
+a {
+  color: var(--brand-blue);
+  text-decoration: none;
+}
+
+a:focus-visible,button:focus-visible,select:focus-visible {
+  outline: 3px solid var(--brand-blue);
+  outline-offset: 3px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: 72px;
+  border-bottom: 1px solid var(--brand-blue);
+  background: var(--surface);
+  color: var(--brand-blue);
+  backdrop-filter: none;
+}
+
+.top .container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .025em;
+  white-space: nowrap;
+}
+
+.brand-logo {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--brand-blue);
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.top-nav {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--brand-blue);
+}
+
+.top-nav a:hover {
+  color: var(--brand-blue);
+}
+
+.nav-action {
+  padding: 10px 15px;
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  color: var(--brand-blue);
+  font-size: 12px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.nav-action:hover {
+  background: var(--brand-blue);
+  color: var(--surface);
+}
+
+.hero {
+  overflow: hidden;
+  color: var(--brand-blue);
+  background: var(--surface);
+  padding: 77px 0 82px;
+  border-bottom: 1px solid var(--brand-blue);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0,1.14fr) minmax(380px,.86fr);
+  gap: 66px;
+  align-items: center;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 850;
+  color: var(--brand-blue);
+}
+
+.eyebrow:before {
+  content: "";
+  display: inline-block;
+  width: 23px;
+  height: 2px;
+  background: var(--surface);
+}
+
+.hero h1 {
+  font-size: clamp(36px, 4.2vw, 58px);
+  letter-spacing: -.046em;
+  line-height: 1.08;
+  margin: 24px 0 22px;
+  max-width: 740px;
+  font-weight: 820;
+  margin-top: 0;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--brand-blue);
+}
+
+.lead {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--brand-blue);
+  max-width: 660px;
+  margin: 0 0 30px;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 0 0 32px;
+}
+
+.tag {
+  color: var(--brand-blue);
+  background: var(--surface);
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 680;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.button {
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  background: var(--brand-blue);
+  color: var(--surface);
+  font-weight: 760;
+  padding: 11px 17px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.button:hover {
+  background: var(--brand-blue);
+  color: var(--surface);
+}
+
+.button.secondary {
+  background: var(--surface);
+  border-color: var(--brand-blue);
+  color: var(--brand-blue);
+}
+
+.button.secondary:hover {
+  background: var(--surface);
+}
+
+.arch-preview {
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  padding: 20px;
+  background: var(--surface);
+  box-shadow: none;
+}
+
+.preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--brand-blue);
+  padding-bottom: 15px;
+  color: var(--brand-blue);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.preview-flow {
+  padding: 22px 2px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+
+.node {
+  background: var(--surface);
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  padding: 11px 16px;
+  color: var(--brand-blue);
+  text-align: center;
+  min-width: 260px;
+  max-width: 100%;
+}
+
+.node strong {
+  display: block;
+  font-size: 12px;
+  letter-spacing: .015em;
+}
+
+.node small {
+  font-size: 10px;
+  color: var(--brand-blue);
+  display: block;
+  margin-top: 1px;
+}
+
+.node.ai {
+  background: var(--surface);
+  border-color: var(--brand-blue);
+}
+
+.node.sql {
+  background: var(--surface);
+  border-color: var(--brand-blue);
+}
+
+.flow-arrow {
+  font-size: 15px;
+  line-height: 1;
+  color: var(--brand-blue);
+}
+
+.preview-bottom {
+  font-size: 10px;
+  color: var(--brand-blue);
+  text-align: center;
+  margin-top: 14px;
+  padding-top: 15px;
+  border-top: 1px solid var(--brand-blue);
+}
+
+.summary {
+  background: var(--surface);
+  border-bottom: 1px solid var(--brand-blue);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+}
+
+.summary-item {
+  padding: 29px 30px 31px 0;
+  min-height: 123px;
+}
+
+.summary-item+.summary-item {
+  padding-left: 30px;
+  border-left: 1px solid var(--brand-blue);
+}
+
+.kicker {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-weight: 840;
+  color: var(--brand-blue);
+  margin-bottom: 7px;
+}
+
+.summary-item strong {
+  font-size: 14px;
+  line-height: 1.5;
+  display: block;
+  color: var(--brand-blue);
+}
+
+.section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--brand-blue);
+  background: var(--surface);
+}
+
+.section-heading {
+  max-width: 840px;
+  margin-bottom: 38px;
+}
+
+.section-num {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 830;
+  color: var(--brand-blue);
+  margin-bottom: 9px;
+}
+
+h2 {
+  font-size: clamp(29px,3.0vw,43px);
+  letter-spacing: -.033em;
+  line-height: 1.2;
+  margin: 0 0 15px;
+  font-weight: 800;
+}
+
+.section-heading p {
+  font-size: 16px;
+  color: var(--brand-blue);
+  margin: 0;
+  max-width: 780px;
+  line-height: 1.78;
+}
+
+h3 {
+  font-size: 19px;
+  line-height: 1.35;
+  letter-spacing: -.018em;
+  margin: 0 0 10px;
+}
+
+p {
+  margin: 0 0 13px;
+}
+
+.text-block p {
+  line-height: 1.83;
+  color: var(--brand-blue);
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.info-card {
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 26px 28px;
+  box-shadow: none;
+}
+
+.info-card p {
+  font-size: 14px;
+  color: var(--brand-blue);
+  margin: 0;
+  line-height: 1.8;
+}
+
+.info-card .icon {
+  font-size: 22px;
+  margin-bottom: 15px;
+  display: inline-flex;
+  width: 43px;
+  height: 43px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--brand-blue);
+  font-weight: 800;
+}
+
+.callout {
+  border-left: 3px solid var(--brand-blue);
+  padding: 11px 0 10px 20px;
+  color: var(--brand-blue);
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 28px 0 0;
+  font-weight: 560;
+}
+
+.arch-row {
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  gap: 12px;
+}
+
+.arch-step {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  padding: 22px 17px;
+  min-height: 195px;
+}
+
+.arch-step:after {
+  content: "→";
+  position: absolute;
+  right: -15px;
+  top: 77px;
+  z-index: 1;
+  color: var(--brand-blue);
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.arch-step:last-child:after {
+  content: "";
+}
+
+.arch-index {
+  font-size: 11px;
+  color: var(--brand-blue);
+  font-weight: 850;
+  letter-spacing: .07em;
+  margin-bottom: 24px;
+}
+
+.arch-step h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.arch-step p {
+  font-size: 12px;
+  color: var(--brand-blue);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.boundary {
+  margin-top: 15px;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--brand-blue);
+  color: var(--brand-blue);
+  background: var(--surface);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.tech-intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.tech-intro .section-heading {
+  margin-bottom: 0;
+}
+
+.safe-note {
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 14px 17px;
+  font-size: 12px;
+  color: var(--brand-blue);
+  max-width: 330px;
+  line-height: 1.6;
+}
+
+.tech-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 22px;
+  align-items: start;
+  min-width: 0;
+}
+
+.tech-list {
+  background: var(--surface);
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  padding: 12px;
+  position: sticky;
+  top: 95px;
+}
+
+.tech-list .list-title {
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--brand-blue);
+  font-weight: 850;
+  margin: 12px 13px 9px;
+}
+
+.tech-tab {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 0;
+  color: var(--brand-blue);
+  text-align: left;
+  font-size: 13px;
+  padding: 11px 13px;
+  border-radius: var(--radius);
+  margin: 3px 0;
+}
+
+.tech-tab:hover {
+  background: var(--brand-blue);
+  color: var(--surface);
+}
+
+.tech-tab.active {
+  background: var(--brand-blue);
+  color: var(--surface);
+  box-shadow: none;
+}
+
+.tech-tab .tab-icon {
+  font-size: 11px;
+  opacity: .75;
+  flex: none;
+  width: 24px;
+}
+
+.tech-pane {
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  color: var(--brand-blue);
+  box-shadow: none;
+  min-height: 520px;
+  border: 1px solid var(--brand-blue);
+  min-width: 0;
+}
+
+.pane-intro {
+  padding: 26px 27px 17px;
+}
+
+.pane-kind {
+  font-size: 10px;
+  font-weight: 830;
+  color: var(--brand-blue);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.pane-intro h3 {
+  font-size: 21px;
+}
+
+.pane-intro p {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--brand-blue);
+  max-width: 800px;
+  margin-bottom: 0;
+}
+
+.pane-code-head {
+  background: var(--surface);
+  color: var(--brand-blue);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px;
+  font-size: 11px;
+  font-weight: 690;
+}
+
+.pane-code-head span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pane-code-head span:before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--brand-blue);
+  border-radius: var(--radius);
+}
+
+.copy-btn {
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  padding: 5px 11px;
+  background: var(--surface);
+  color: var(--brand-blue);
+  font-size: 11px;
+  font-weight: 710;
+}
+
+.copy-btn:hover {
+  background: var(--brand-blue);
+  color: var(--surface);
+}
+
+pre {
+  margin: 0;
+  padding: 22px 25px 26px;
+  overflow-x: auto;
+  background: var(--surface);
+  color: var(--brand-blue);
+  font: 12px/1.8 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  tab-size: 2;
+  min-height: 290px;
+  white-space: pre;
+}
+
+.pane-details {
+  padding: 17px 25px 24px;
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--brand-blue);
+  line-height: 1.65;
+}
+
+.pane-details strong {
+  display: block;
+  color: var(--brand-blue);
+  margin-bottom: 3px;
+}
+
+.tech-panel[hidden] {
+  display: none;
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+}
+
+.decision {
+  background: var(--surface);
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  padding: 27px 24px;
+}
+
+.decision .num {
+  font-size: 12px;
+  color: var(--brand-blue);
+  font-weight: 850;
+  letter-spacing: .1em;
+  margin-bottom: 20px;
+}
+
+.decision p {
+  font-size: 13px;
+  line-height: 1.79;
+  color: var(--brand-blue);
+  margin-bottom: 0;
+}
+
+.feature-strip {
+  margin: 28px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.feature {
+  padding: 19px 22px;
+  border: 1px solid var(--brand-blue);
+  background: var(--surface);
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--brand-blue);
+}
+
+.feature strong {
+  display: block;
+  color: var(--brand-blue);
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.outcomes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+  align-items: start;
+}
+
+.outcomes .text-block p {
+  font-size: 15px;
+}
+
+.checks {
+  background: var(--surface);
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  padding: 26px 30px;
+}
+
+.checks h3 {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.checks ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.checks li {
+  display: flex;
+  gap: 12px;
+  color: var(--brand-blue);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--brand-blue);
+  font-size: 14px;
+}
+
+.checks li:last-child {
+  border-bottom: 0;
+}
+
+.checks li:before {
+  content: "✓";
+  color: var(--brand-blue);
+  font-weight: 900;
+}
+
+.note {
+  margin-top: 23px;
+  padding: 18px 22px;
+  background: var(--surface);
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius);
+  color: var(--brand-blue);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.footer {
+  background: var(--surface);
+  color: var(--brand-blue);
+  padding: 38px 0;
+}
+
+.footer .container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+
+.footer strong {
+  display: block;
+  color: var(--brand-blue);
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.footer p {
+  font-size: 12px;
+  margin: 0;
+  max-width: 680px;
+  line-height: 1.7;
+}
+
+.footer a {
+  font-size: 12px;
+  color: var(--brand-blue);
+}
+
+.tech-panels {
+  min-width: 0;
+}
+
+/* Case study components */
+
+.match-content {
+  padding: 0 27px 25px;
+  font-size: 14px;
+}
+
+.match-content h4 {
+  margin: 24px 0 8px;
+  font-size: 16px;
+}
+
+.match-content table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+  margin: 15px 0;
+}
+
+.match-content th,.match-content td {
+  border: 1px solid var(--brand-blue);
+  padding: 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.match-content ol {
+  padding-left: 20px;
+}
+
+.match-content li {
+  margin-bottom: 12px;
+}
+
+.match-example {
+  border: 1px solid var(--brand-blue);
+  padding: 18px;
+  margin-top: 20px;
+}
+
+.match-content a {
+  text-decoration: underline;
+}
+
+.tech-list .tech-tab {
+  line-height: 1.4;
+}
+
+.match-content code {
+  font-size: .92em;
+  overflow-wrap: anywhere;
+}
+
+.match-content td {
+  overflow-wrap: anywhere;
+}
+
+.ai-deep-dive .ai-lead-heading {
+  font-size: 21px;
+  letter-spacing: -.025em;
+  margin: 6px 0 11px;
+}
+
+.ai-deep-dive .ai-second-part {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #aac3e4;
+  display: block;
+}
+
+.ai-deep-dive h4 {
+  margin-top: 30px;
+}
+
+.ai-deep-dive p {
+  margin-bottom: 13px;
+}
+
+.ai-training-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+  margin: 22px 0 30px;
+}
+
+.ai-training-card {
+  border: 1px solid var(--border-subtle);
+  padding: 17px 18px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  min-width: 0;
+}
+
+.ai-training-card h5 {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 5px 0 8px;
+  color: var(--brand-blue);
+}
+
+.ai-training-card p {
+  font-size: 12.8px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.ai-step-number {
+  font-size: 11px;
+  letter-spacing: .1em;
+  font-weight: 850;
+  color: var(--brand-blue);
+}
+
+.ai-field-table td:first-child {
+  width: 36%;
+}
+
+.ai-prompt pre,.ai-json pre {
+  min-height: 0;
+  padding: 19px 25px;
+  color: var(--brand-blue);
+  background: var(--surface-tint);
+  border-top: 1px solid #d3e0f0;
+  border-bottom: 1px solid #d3e0f0;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.ai-prompt code,.ai-json code {
+  font-size: inherit;
+}
+
+.ai-connection-note {
+  margin: 22px 0 6px;
+  border-left: 3px solid var(--brand-blue);
+  padding: 15px 18px;
+  background: var(--surface-tint);
+  font-size: 13px;
+}
+
+.conversation-thread {
+  border: 1px solid #c3d4eb;
+  padding: 18px;
+  border-radius: var(--radius);
+  background: #f8fbff;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin: 21px 0 32px;
+}
+
+.conversation-line {
+  max-width: 88%;
+  border: 1px solid #b6cce7;
+  border-radius: 6px;
+  padding: 11px 15px;
+  background: white;
+  align-self: flex-start;
+}
+
+.conversation-line.employee {
+  align-self: flex-end;
+  background: var(--brand-blue);
+  color: var(--surface);
+  border-color: var(--brand-blue);
+}
+
+.conversation-speaker {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  margin-bottom: 5px;
+  opacity: .85;
+}
+
+.conversation-line p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ai-rubric td:last-child,.ai-rubric th:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ai-coaches {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 12px;
+  margin: 20px 0 31px;
+}
+
+.ai-coach {
+  border: 1px solid #b8cee8;
+  border-radius: var(--radius);
+  padding: 16px;
+  min-width: 0;
+}
+
+.ai-coach.is-top {
+  border: 2px solid var(--brand-blue);
+  padding: 15px;
+}
+
+.ai-coach-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ai-coach h5 {
+  font-size: 17px;
+  letter-spacing: -.025em;
+  margin: 4px 0 11px;
+}
+
+.ai-coach-kicker {
+  display: block;
+  font-size: 9px;
+  line-height: 1.4;
+  letter-spacing: .09em;
+  font-weight: 850;
+}
+
+.ai-score {
+  font-size: 29px;
+  font-weight: 850;
+  letter-spacing: -.05em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.ai-score span {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.ai-coach .ai-coach-meta {
+  font-size: 12px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
+.score-components {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 14px 0 11px;
+}
+
+.score-components span {
+  padding: 3px 6px;
+  border: 1px solid #bfd1ea;
+  border-radius: var(--radius);
+  font-size: 10px;
+  font-weight: 730;
+}
+
+.ai-coach .ai-result-reason {
+  font-size: 12px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.ai-output-preview {
+  padding: 18px 22px;
+  margin: 17px 0 20px;
+  border-left: 3px solid var(--brand-blue);
+  background: var(--surface-tint);
+}
+
+.ai-output-label {
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .08em;
+  margin-bottom: 8px;
+}
+
+.ai-output-preview p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.ai-final-note {
+  padding-top: 16px;
+  border-top: 1px solid #cbd9ec;
+}
+
+.ai-deep-dive {
+  line-height: 1.7;
+}
+
+.ai-deep-dive .ai-section-label {
+  display: inline-block;
+  margin: 12px 0 7px;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .12em;
+  color: var(--brand-blue);
+}
+
+.case-data-context {
+  font-size: 12px;
+  line-height: 1.65;
+  border-left: 3px solid var(--brand-blue);
+  padding: 9px 0 9px 15px;
+  margin: 0 0 25px;
+  max-width: 650px;
+  color: var(--brand-blue);
+}
+
+.case-data-context span {
+  font-weight: 850;
+  font-size: 10px;
+  letter-spacing: .10em;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.qa-table td:first-child {
+  font-weight: 680;
+}
+
+@media (max-width: 1100px) {
+  .ai-coaches {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-coach .ai-coach-meta {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 1040px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .arch-preview {
+    max-width: 600px;
+  }
+
+  .arch-row {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .arch-step:after {
+    display: none;
+  }
+
+  .tech-layout {
+    grid-template-columns: 200px 1fr;
+  }
+
+  .summary-item {
+    padding-right: 14px;
+  }
+
+  .summary-item+.summary-item {
+    padding-left: 17px;
+  }
+}
+
+@media (max-width: 770px) {
+  .container {
+    padding: 0 19px;
+  }
+
+  .top {
+    height: 66px;
+  }
+
+  .top-nav {
+    gap: 12px;
+  }
+
+  .top-nav a:not(.nav-action) {
+    display: none;
+  }
+
+  .hero {
+    padding: 54px 0 57px;
+  }
+
+  .lead {
+    font-size: 15px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-item,.summary-item+.summary-item {
+    padding: 17px 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--brand-blue);
+    min-height: 0;
+  }
+
+  .section {
+    padding: 58px 0;
+  }
+
+  .problem-grid,.work-grid,.outcomes,.feature-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .arch-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .arch-step {
+    min-height: 175px;
+  }
+
+  .tech-intro {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .safe-note {
+    max-width: unset;
+  }
+
+  .tech-layout {
+    display: block;
+  }
+
+  .tech-list {
+    position: static;
+    display: flex;
+    overflow: auto;
+    gap: 5px;
+    margin-bottom: 13px;
+  }
+
+  .tech-list .list-title {
+    display: none;
+  }
+
+  .tech-tab {
+    white-space: nowrap;
+    width: auto;
+    padding: 9px 11px;
+  }
+
+  .tech-tab .tab-icon {
+    display: none;
+  }
+
+  .pane-intro {
+    padding: 22px 19px 16px;
+  }
+
+  pre {
+    font-size: 11px;
+    padding: 15px;
+    min-height: 260px;
+  }
+
+  .pane-details {
+    padding: 17px;
+  }
+
+  .footer .container {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .match-content {
+    padding: 0 19px 20px;
+  }
+
+  .match-content th,.match-content td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .tech-panels {
+    width: 100%;
+  }
+
+  pre {
+    max-width: 100%;
+  }
+
+  .node {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .tech-list {
+    gap: 4px;
+  }
+
+  .tech-tab {
+    font-size: 12px;
+  }
+
+  .ai-training-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-deep-dive .ai-lead-heading {
+    font-size: 19px;
+  }
+
+  .conversation-thread {
+    padding: 11px;
+  }
+
+  .conversation-line {
+    max-width: 96%;
+  }
+
+  .ai-prompt pre,.ai-json pre {
+    padding: 14px;
+    font-size: 10.5px;
+  }
+}
+
+@media (max-width: 450px) {
+  .brand {
+    font-size: 11px;
+  }
+
+  .brand-logo {
+    height: 30px;
+    width: 30px;
+  }
+
+  .nav-action {
+    padding: 8px;
+    font-size: 10px;
+  }
+
+  .arch-row {
+    grid-template-columns: 1fr;
+  }
+
+  .node {
+    min-width: 235px;
+  }
+
+  .arch-step {
+    min-height: 0;
+  }
+}
+
+@media print {
+  .top,.actions,.tech-list,.copy-btn {
+    display: none;
+  }
+
+  .arch-preview {
+    display: none;
+  }
+
+  .hero-grid {
+    display: block;
+  }
+
+  .tech-panel[hidden] {
+    display: block;
+  }
+
+  .tech-layout {
+    display: block;
+  }
+
+  .tech-pane {
+    break-inside: avoid;
+  }
+
+  .section {
+    padding: 28px 0;
+  }
+
+  pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .case-data-context {
+    break-inside: avoid;
+  }
+}
 </style>
 </head>
 <body>
 <header class="top"><div class="container"><a class="brand" href="#top"><span class="brand-logo">T/</span> SELECTED TECHNICAL WORK</a><nav aria-label="Primary" class="top-nav"><a href="#overview">Overview</a><a href="#architecture">Architecture</a><a href="#technical">Technical work</a><a href="#outcomes">Outcomes</a><a class="nav-action" href="#technical">Explore the build ↗</a></nav></div></header>
 <main>
-<section class="hero" id="top"><div class="container hero-grid"><div><h1>AI Integrated Coaching &amp; Consulting Portal</h1><p class="lead">A connected coaching and mentoring portal for hospital systems and municipal organizations—combining AI-guided coach discovery, Calendly scheduling synchronized by Make, and SQL reporting of gross and net booking engagement.</p><p class="case-data-context"><span>EARLY PRODUCTION DATA</span> The records and workflows shown reflect the platform’s initial production phase.</p><div class="tag-row"><span class="tag">Retool Apps</span><span class="tag">Conversational AI</span><span class="tag">SQL Reporting</span><span class="tag">Retool Database</span><span class="tag">Calendly</span><span class="tag">Make.com</span></div><div class="actions"><a class="button" href="#technical">Explore the build <span aria-hidden="true">↗</span></a><a class="button secondary" href="#overview">Read the case study <span aria-hidden="true">↓</span></a></div></div><div aria-label="System overview: Retool portal and AI coach discovery; Calendly sends booking events to Make; Make synchronizes verified booking records directly into Retool Database through PostgreSQL; SQL powers engagement reports." class="arch-preview" role="img"><div class="preview-head"><span>COACHING PLATFORM / SYSTEM FLOW</span><div aria-hidden="true" class="dots"><span></span><span></span><span></span></div></div><div class="preview-flow">
+<section class="hero" id="top"><div class="container hero-grid"><div><h1>AI Integrated Coaching &amp; Consulting Portal</h1><p class="lead">A connected coaching and mentoring portal for hospital systems and municipal organizations—combining AI-guided coach discovery, Calendly scheduling synchronized by Make, and SQL reporting of gross and net booking engagement.</p><p class="case-data-context"><span>EARLY PRODUCTION DATA</span> The records and workflows shown reflect the platform’s initial production phase.</p><div class="tag-row"><span class="tag">Retool Apps</span><span class="tag">Conversational AI</span><span class="tag">SQL Reporting</span><span class="tag">Retool Database</span><span class="tag">Calendly</span><span class="tag">Make.com</span></div><div class="actions"><a class="button" href="#technical">Explore the build <span aria-hidden="true">↗</span></a><a class="button secondary" href="#overview">Read the case study <span aria-hidden="true">↓</span></a></div></div><div aria-label="System overview: Retool portal and AI coach discovery; Calendly sends booking events to Make; Make synchronizes verified booking records directly into Retool Database through PostgreSQL; SQL powers engagement reports." class="arch-preview" role="img"><div class="preview-head"><span>COACHING PLATFORM / SYSTEM FLOW</span></div><div class="preview-flow">
 <div class="node"><strong>RETOOL PORTAL + AI CHATBOT</strong><small>Onboarding · Preferences · Coach discovery</small></div>
 <div class="flow-arrow">↓</div>
 <div class="node ai"><strong>CALENDLY</strong><small>Employees book · Cancel · Reschedule</small></div>
@@ -196,8 +1445,8 @@ body,.hero,.section.gray,.section.dark,.top,.footer,pre{background:#fff;color:#2
 <div class="flow-arrow">↓</div>
 <div class="node sql"><strong>RETOOL DATA + SQL REPORTING</strong><small>Gross / net activity · program / coach reporting</small></div></div><div class="preview-bottom">MAKE SYNCHRONIZES CALENDLY VIA POSTGRESQL CONNECTOR · RETOOL APPS READS DATABASE</div></div></div></section>
 <div class="summary"><div class="container summary-grid"><div class="summary-item"><div class="kicker">Client</div><strong>Chicago-based consulting firm specializing in trauma-informed coaching and professional development</strong></div><div class="summary-item"><div class="kicker">My role</div><strong>Platform architecture, AI coach discovery, Make/Calendly synchronization, and SQL engagement reporting; collaboration on broader database orchestration</strong></div><div class="summary-item"><div class="kicker">Delivered scope</div><strong>Employee portal, AI coaching assessment, coach discovery, Calendly booking activity, and program engagement dashboards</strong></div></div></div>
-<section class="section white" id="overview"><div class="container"><div class="section-heading"><div class="section-num">01 / The project</div><h2>One connected experience instead of disconnected handoffs.</h2><p>The firm coordinated coaching programs across participating healthcare systems and municipal organizations. As programs expanded, guiding employees to suitable coaches, coordinating Calendly bookings and cancellations, and keeping program engagement reporting current became increasingly complex.</p></div><div class="problem-grid"><div class="info-card"><div class="icon">↗</div><h3>The employee experience</h3><p>Employees needed an intuitive way to share their development goals, identify relevant coaches, and book or adjust appointments through Calendly without fragmented forms and email exchanges.</p></div><div class="info-card"><div class="icon">≡</div><h3>The operational challenge</h3><p>Administrators needed a reliable record of which employees booked, cancelled or rescheduled coaching appointments—linked to the correct coach, program and organization for engagement reporting.</p></div></div><div class="callout">I connected the employee experience, AI-guided coach discovery and scheduling activity into one portal. Calendly remained the scheduling source of truth; the Retool database reflected those events for operational visibility.</div></div></section>
-<section class="section gray" id="architecture">
+<section class="section" id="overview"><div class="container"><div class="section-heading"><div class="section-num">01 / The project</div><h2>One connected experience instead of disconnected handoffs.</h2><p>The firm coordinated coaching programs across participating healthcare systems and municipal organizations. As programs expanded, guiding employees to suitable coaches, coordinating Calendly bookings and cancellations, and keeping program engagement reporting current became increasingly complex.</p></div><div class="problem-grid"><div class="info-card"><div class="icon">↗</div><h3>The employee experience</h3><p>Employees needed an intuitive way to share their development goals, identify relevant coaches, and book or adjust appointments through Calendly without fragmented forms and email exchanges.</p></div><div class="info-card"><div class="icon">≡</div><h3>The operational challenge</h3><p>Administrators needed a reliable record of which employees booked, cancelled or rescheduled coaching appointments—linked to the correct coach, program and organization for engagement reporting.</p></div></div><div class="callout">I connected the employee experience, AI-guided coach discovery and scheduling activity into one portal. Calendly remained the scheduling source of truth; the Retool database reflected those events for operational visibility.</div></div></section>
+<section class="section" id="architecture">
 <div class="container">
 <div class="section-heading">
 <div class="section-num">
@@ -266,7 +1515,7 @@ body,.hero,.section.gray,.section.dark,.top,.footer,pre{background:#fff;color:#2
 <div class="boundary"><strong>Clear ownership: </strong>Calendly is the scheduling source of truth → Make verifies host, program, and employee mappings → a PostgreSQL ingestion function updates Retool Database → Retool Apps reads that data for SQL reports. The AI chat does not book sessions or infer attendance.</div>
 </div>
 </section>
-<section class="section dark" id="technical"><div class="container"><div class="tech-intro"><div class="section-heading">
+<section class="section" id="technical"><div class="container"><div class="tech-intro"><div class="section-heading">
 <div class="section-num">03 / Inside the build</div>
 <h2>Three parts of the build, connected end to end.</h2>
 <p>Three technical areas: the conversational AI configuration and coach matching logic, SQL reporting for gross and net booking activity, and Calendly synchronization through Make and a PostgreSQL connection.</p></div></div><div class="tech-layout"><div aria-label="Technical examples" class="tech-list" role="tablist">
@@ -826,8 +2075,8 @@ RETRIES, BACKFILL AND ESCALATION
 <div class="match-content">
 </div>
 </div></div></div></div></div></section>
-<section class="section white" id="decisions"><div class="container"><div class="section-heading"><div class="section-num">04 / Engineering judgment</div><h2>Three design decisions that shaped the build.</h2><p>The key decisions were dividing responsibilities across the right systems, grounding AI recommendations in coach data, and making scheduling changes reportable without duplicates.</p></div><div class="work-grid"><article class="decision"><div class="num">DECISION 01</div><h3>Keep the employee experience in Retool.</h3><p>Retool provided the onboarding, AI chat, coach discovery and reporting interface. The chatbot helped employees interpret goals and explore coaches without changing bookings directly.</p></article><article class="decision"><div class="num">DECISION 02</div><h3>Use Make for Calendly event synchronization.</h3><p>Calendly owned appointments. Make received the create and cancel events, formatted them and wrote verified booking records to Retool Database via PostgreSQL. This dedicated path handled reschedules and failed-delivery retries.</p></article><article class="decision"><div class="num">DECISION 03</div><h3>Treat scheduling activity as structured engagement data.</h3><p>One Calendly invitee URI mapped to one booking record. Booking, cancellation and reschedule timestamps flowed into a single SQL reporting query, preserving each scheduling action without duplicate records.</p></article></div><div class="feature-strip"><div class="feature"><strong>My implementation</strong>Platform architecture, Retool interface, AI coach-discovery integration, Make / Calendly event synchronization and SQL engagement reporting.</div><div class="feature"><strong>Collaboration</strong>Partnered with a colleague on broader SQL/database orchestration while owning the engagement-reporting SQL showcased in this case study.</div></div></div></section>
-<section class="section gray" id="outcomes"><div class="container"><div class="section-heading"><div class="section-num">05 / Delivery and impact</div><h2>One coaching journey, with visible scheduling engagement.</h2><p>The portal connected AI-assisted coach discovery to actual Calendly appointment activity and let program administrators report on bookings, cancellations and reschedules across participating organizations.</p></div><div class="outcomes"><div class="text-block"><p>Employees could complete onboarding, discuss coaching goals with the chatbot, review relevant coach profiles, and use Calendly to book or change their appointments.</p>
+<section class="section" id="decisions"><div class="container"><div class="section-heading"><div class="section-num">04 / Engineering judgment</div><h2>Three design decisions that shaped the build.</h2><p>The key decisions were dividing responsibilities across the right systems, grounding AI recommendations in coach data, and making scheduling changes reportable without duplicates.</p></div><div class="work-grid"><article class="decision"><div class="num">DECISION 01</div><h3>Keep the employee experience in Retool.</h3><p>Retool provided the onboarding, AI chat, coach discovery and reporting interface. The chatbot helped employees interpret goals and explore coaches without changing bookings directly.</p></article><article class="decision"><div class="num">DECISION 02</div><h3>Use Make for Calendly event synchronization.</h3><p>Calendly owned appointments. Make received the create and cancel events, formatted them and wrote verified booking records to Retool Database via PostgreSQL. This dedicated path handled reschedules and failed-delivery retries.</p></article><article class="decision"><div class="num">DECISION 03</div><h3>Treat scheduling activity as structured engagement data.</h3><p>One Calendly invitee URI mapped to one booking record. Booking, cancellation and reschedule timestamps flowed into a single SQL reporting query, preserving each scheduling action without duplicate records.</p></article></div><div class="feature-strip"><div class="feature"><strong>My implementation</strong>Platform architecture, Retool interface, AI coach-discovery integration, Make / Calendly event synchronization and SQL engagement reporting.</div><div class="feature"><strong>Collaboration</strong>Partnered with a colleague on broader SQL/database orchestration while owning the engagement-reporting SQL showcased in this case study.</div></div></div></section>
+<section class="section" id="outcomes"><div class="container"><div class="section-heading"><div class="section-num">05 / Delivery and impact</div><h2>One coaching journey, with visible scheduling engagement.</h2><p>The portal connected AI-assisted coach discovery to actual Calendly appointment activity and let program administrators report on bookings, cancellations and reschedules across participating organizations.</p></div><div class="outcomes"><div class="text-block"><p>Employees could complete onboarding, discuss coaching goals with the chatbot, review relevant coach profiles, and use Calendly to book or change their appointments.</p>
 <p>With Make synchronizing Calendly events into Retool, administrators could see which programs generated bookings, how many appointments were cancelled or rescheduled, and how many unique employees booked coaching.</p>
 <p>The engagement-reporting SQL used booking records and period-specific timestamps rather than relying on chatbot interactions or assumed session completion. That created a consistent link between scheduling operations and reporting.</p></div><div class="checks"><h3>Capabilities delivered</h3><ul><li>Employee onboarding and conversational AI coaching assessment</li><li>Coach discovery based on structured employee preferences</li><li>Calendly booking, cancellation and reschedule capture</li><li>Make-powered Calendly → PostgreSQL event synchronization</li><li>Idempotent booking records keyed by Calendly invitee URI</li><li>SQL reporting on booking activity and program engagement</li></ul></div></div></div></section>
 </main>
